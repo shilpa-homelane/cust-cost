@@ -1,0 +1,1696 @@
+{
+    "materials": [
+        {
+            "sl_no": 1,
+            "description": "MDF - 2.1mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 272.0,
+            "sft_price": 8.5,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 0.0,
+                    "discount_pct": 0.0,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 0.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 0.0,
+                    "mrp_board_with_gst": 11.0,
+                    "discount_pct": 3.49,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 8.5
+                }
+            }
+        },
+        {
+            "sl_no": 2,
+            "description": "MDF - 3.3mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 313.0,
+            "sft_price": 9.8,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 17.2,
+                    "discount_pct": 5.49,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 10.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 313.0,
+                    "mrp_board_with_gst": 16.0,
+                    "discount_pct": 5.02,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 12.2
+                }
+            }
+        },
+        {
+            "sl_no": 3,
+            "description": "MDF - 5.5mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 497.0,
+            "sft_price": 15.5,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 27.2,
+                    "discount_pct": 8.71,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 16.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 497.0,
+                    "mrp_board_with_gst": 25.0,
+                    "discount_pct": 7.93,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 19.3
+                }
+            }
+        },
+        {
+            "sl_no": 4,
+            "description": "MDF - 7.5mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 622.0,
+            "sft_price": 19.4,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 34.1,
+                    "discount_pct": 10.9,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 19.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 622.0,
+                    "mrp_board_with_gst": 31.0,
+                    "discount_pct": 10.03,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 24.4
+                }
+            }
+        },
+        {
+            "sl_no": 5,
+            "description": "MDF - 11mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 950.0,
+            "sft_price": 29.7,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 52.0,
+                    "discount_pct": 16.65,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 30.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 950.0,
+                    "mrp_board_with_gst": 47.0,
+                    "discount_pct": 14.9,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 36.3
+                }
+            }
+        },
+        {
+            "sl_no": 6,
+            "description": "MDF - 17mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1397.0,
+            "sft_price": 43.7,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 76.5,
+                    "discount_pct": 24.5,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 44.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 1397.0,
+                    "mrp_board_with_gst": 69.0,
+                    "discount_pct": 21.92,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 53.4
+                }
+            }
+        },
+        {
+            "sl_no": 7,
+            "description": "MDF - 25mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2274.0,
+            "sft_price": 71.1,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 124.7,
+                    "discount_pct": 39.9,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 71.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 2274.0,
+                    "mrp_board_with_gst": 112.0,
+                    "discount_pct": 35.68,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 87.0
+                }
+            }
+        },
+        {
+            "sl_no": 8,
+            "description": "MDF - 30mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 3165.0,
+            "sft_price": 98.9,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 173.5,
+                    "discount_pct": 55.52,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 99.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 3165.0,
+                    "mrp_board_with_gst": 0.0,
+                    "discount_pct": 0.0,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 0.0
+                }
+            }
+        },
+        {
+            "sl_no": 9,
+            "description": "HDF - 3.3mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 407.0,
+            "sft_price": 12.7,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 22.3,
+                    "discount_pct": 7.14,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 13.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 407.0,
+                    "mrp_board_with_gst": 20.0,
+                    "discount_pct": 6.4,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 15.6
+                }
+            }
+        },
+        {
+            "sl_no": 10,
+            "description": "HDF - 5.5mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 657.0,
+            "sft_price": 20.5,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 36.0,
+                    "discount_pct": 11.53,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 21.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 657.0,
+                    "mrp_board_with_gst": 32.0,
+                    "discount_pct": 10.3,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 25.1
+                }
+            }
+        },
+        {
+            "sl_no": 11,
+            "description": "HDF - 7.5mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 830.0,
+            "sft_price": 25.9,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 45.5,
+                    "discount_pct": 14.56,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 26.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 830.0,
+                    "mrp_board_with_gst": 41.0,
+                    "discount_pct": 13.03,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 31.7
+                }
+            }
+        },
+        {
+            "sl_no": 12,
+            "description": "HDF - 11mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1234.0,
+            "sft_price": 38.6,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 67.6,
+                    "discount_pct": 21.65,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 39.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 1234.0,
+                    "mrp_board_with_gst": 61.0,
+                    "discount_pct": 19.38,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 47.2
+                }
+            }
+        },
+        {
+            "sl_no": 13,
+            "description": "HDF - 17mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1815.0,
+            "sft_price": 56.7,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 99.5,
+                    "discount_pct": 31.84,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 57.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 1815.0,
+                    "mrp_board_with_gst": 89.0,
+                    "discount_pct": 28.48,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 69.4
+                }
+            }
+        },
+        {
+            "sl_no": 14,
+            "description": "HDF - 25mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2956.0,
+            "sft_price": 92.4,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 162.1,
+                    "discount_pct": 51.86,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 92.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 2956.0,
+                    "mrp_board_with_gst": 145.0,
+                    "discount_pct": 46.39,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 113.1
+                }
+            }
+        },
+        {
+            "sl_no": 15,
+            "description": "HD - HMR - 3mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 501.0,
+            "sft_price": 15.7,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 27.4,
+                    "discount_pct": 8.79,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 16.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 501.0,
+                    "mrp_board_with_gst": 22.0,
+                    "discount_pct": 7.02,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 17.1
+                }
+            }
+        },
+        {
+            "sl_no": 16,
+            "description": "HD - HMR - 5.5mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 809.0,
+            "sft_price": 25.3,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 44.3,
+                    "discount_pct": 14.19,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 25.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 809.0,
+                    "mrp_board_with_gst": 39.0,
+                    "discount_pct": 12.43,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 30.3
+                }
+            }
+        },
+        {
+            "sl_no": 17,
+            "description": "HD - HMR - 8mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1090.0,
+            "sft_price": 34.1,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 59.7,
+                    "discount_pct": 19.11,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 34.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 1090.0,
+                    "mrp_board_with_gst": 52.0,
+                    "discount_pct": 16.75,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 40.8
+                }
+            }
+        },
+        {
+            "sl_no": 18,
+            "description": "HD - HMR - 12mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1657.0,
+            "sft_price": 51.8,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 90.8,
+                    "discount_pct": 29.06,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 52.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 1657.0,
+                    "mrp_board_with_gst": 80.0,
+                    "discount_pct": 25.48,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 62.1
+                }
+            }
+        },
+        {
+            "sl_no": 19,
+            "description": "HD - HMR - 16mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2104.0,
+            "sft_price": 65.8,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 115.3,
+                    "discount_pct": 36.9,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 66.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 2104.0,
+                    "mrp_board_with_gst": 101.0,
+                    "discount_pct": 32.33,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 78.8
+                }
+            }
+        },
+        {
+            "sl_no": 20,
+            "description": "HD - HMR - 18mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2468.0,
+            "sft_price": 77.1,
+            "brand_pricing": {
+                "GREEN PANEL": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 135.3,
+                    "discount_pct": 43.29,
+                    "sp_board": 43.0,
+                    "selling_sft_price": 77.0
+                },
+                "ACTION TESSA": {
+                    "sft_price": 2468.0,
+                    "mrp_board_with_gst": 119.0,
+                    "discount_pct": 37.92,
+                    "sp_board": 22.0,
+                    "selling_sft_price": 92.4
+                }
+            }
+        },
+        {
+            "sl_no": 21,
+            "description": "PLY MR  - 6mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1088.0,
+            "sft_price": 34.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 48.0,
+                    "discount_pct": 1536.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 37.0
+                },
+                "CENTURY": {
+                    "sft_price": 1184.0,
+                    "mrp_board": 41.0,
+                    "discount_pct": 1312.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 34.0
+                }
+            }
+        },
+        {
+            "sl_no": 22,
+            "description": "PLY MR  - 8mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1376.0,
+            "sft_price": 43.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 57.0,
+                    "discount_pct": 1824.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 44.0
+                },
+                "CENTURY": {
+                    "sft_price": 1408.0,
+                    "mrp_board": 51.0,
+                    "discount_pct": 1632.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 43.0
+                }
+            }
+        },
+        {
+            "sl_no": 23,
+            "description": "PLY MR  - 12mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1568.0,
+            "sft_price": 49.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 69.0,
+                    "discount_pct": 2208.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 53.0
+                },
+                "CENTURY": {
+                    "sft_price": 1696.0,
+                    "mrp_board": 59.0,
+                    "discount_pct": 1888.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 49.0
+                }
+            }
+        },
+        {
+            "sl_no": 24,
+            "description": "PLY MR  - 15mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1984.0,
+            "sft_price": 62.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": 75.0,
+                    "discount_pct": 2400.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 62.0
+                }
+            }
+        },
+        {
+            "sl_no": 25,
+            "description": "PLY MR  - 18mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2336.0,
+            "sft_price": 73.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 94.0,
+                    "discount_pct": 3008.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 72.0
+                },
+                "CENTURY": {
+                    "sft_price": 2304.0,
+                    "mrp_board": 88.0,
+                    "discount_pct": 2816.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 73.0
+                }
+            }
+        },
+        {
+            "sl_no": 26,
+            "description": "PLY MR  - 25mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 3200.0,
+            "sft_price": 100.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": 0.0,
+                    "discount_pct": 0.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 0.0
+                }
+            }
+        },
+        {
+            "sl_no": 27,
+            "description": "PLY BWR - 6mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1294.0,
+            "sft_price": 40.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 0.0
+                }
+            }
+        },
+        {
+            "sl_no": 28,
+            "description": "PLY BWR  - 9mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1570.0,
+            "sft_price": 49.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 0.0
+                }
+            }
+        },
+        {
+            "sl_no": 29,
+            "description": "PLY BWR- 12mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1994.0,
+            "sft_price": 62.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 0.0
+                }
+            }
+        },
+        {
+            "sl_no": 30,
+            "description": "PLY BWR- 16mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2520.0,
+            "sft_price": 79.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 0.0
+                }
+            }
+        },
+        {
+            "sl_no": 31,
+            "description": "PLY BWR- 19mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2907.0,
+            "sft_price": 91.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 0.0
+                }
+            }
+        },
+        {
+            "sl_no": 32,
+            "description": "PLY BWP - 6mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1344.0,
+            "sft_price": 42.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 62.0,
+                    "discount_pct": 1984.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 48.0
+                },
+                "CENTURY": {
+                    "sft_price": 1536.0,
+                    "mrp_board": 50.0,
+                    "discount_pct": 1600.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 42.0
+                }
+            }
+        },
+        {
+            "sl_no": 33,
+            "description": "PLY BWP - 9mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1632.0,
+            "sft_price": 51.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 74.0,
+                    "discount_pct": 2368.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 57.0
+                },
+                "CENTURY": {
+                    "sft_price": 1824.0,
+                    "mrp_board": 61.0,
+                    "discount_pct": 1952.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 51.0
+                }
+            }
+        },
+        {
+            "sl_no": 34,
+            "description": "PLY BWP - 12mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2016.0,
+            "sft_price": 63.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 87.0,
+                    "discount_pct": 2784.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 67.0
+                },
+                "CENTURY": {
+                    "sft_price": 2144.0,
+                    "mrp_board": 76.0,
+                    "discount_pct": 2432.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 63.0
+                }
+            }
+        },
+        {
+            "sl_no": 35,
+            "description": "PLY BWP - 16mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2560.0,
+            "sft_price": 80.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": null,
+                    "discount_pct": 0.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 0.0
+                },
+                "CENTURY": {
+                    "sft_price": 0.0,
+                    "mrp_board": 96.0,
+                    "discount_pct": 3072.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 80.0
+                }
+            }
+        },
+        {
+            "sl_no": 36,
+            "description": "PLY BWP - 19mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2976.0,
+            "sft_price": 93.0,
+            "brand_pricing": {
+                "GREEN PLY": {
+                    "sft_price": "4 ' x\t8 ''",
+                    "mrp_board": 121.0,
+                    "discount_pct": 3872.0,
+                    "sp_board": 10.0,
+                    "selling_sft_price": 93.0
+                },
+                "CENTURY": {
+                    "sft_price": 2976.0,
+                    "mrp_board": 112.0,
+                    "discount_pct": 3584.0,
+                    "sp_board": 2.5,
+                    "selling_sft_price": 93.0
+                }
+            }
+        },
+        {
+            "sl_no": 37,
+            "description": "Blockboard -19mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 3450.0,
+            "sft_price": 108.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 38,
+            "description": "Blockboard -25mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 3450.0,
+            "sft_price": 108.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 39,
+            "description": "Flexiply - 6mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1952.0,
+            "sft_price": 61.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 40,
+            "description": "Flexiply - 8mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2496.0,
+            "sft_price": 78.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 41,
+            "description": "Flexiply - 12mm",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 3776.0,
+            "sft_price": 118.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 42,
+            "description": "WPC Board",
+            "size": "3 ' x7 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1260.0,
+            "sft_price": 60.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 43,
+            "description": "0.8mm Off white laminate",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 750.0,
+            "sft_price": 24.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 44,
+            "description": "0.8mm Colour laminate",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 900.0,
+            "sft_price": 29.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 45,
+            "description": "SF Laminate",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1500.0,
+            "sft_price": 47.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 46,
+            "description": "HGL Laminate",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1830.0,
+            "sft_price": 58.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 47,
+            "description": "MR+ Laminate",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2500.0,
+            "sft_price": 78.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 48,
+            "description": "Marble Laminate -Glossy",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2200.0,
+            "sft_price": 69.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 49,
+            "description": "Marble Finish  -Matt",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 1700.0,
+            "sft_price": 53.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 50,
+            "description": "Marble Finish -Royal Touch",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 2855.0,
+            "sft_price": 89.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 51,
+            "description": "Veneer (120/sft)_",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 3840.0,
+            "sft_price": 120.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 52,
+            "description": "Veneer (150/sft)",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 4800.0,
+            "sft_price": 150.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 53,
+            "description": "Acrylic(110/SFT)",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 3500.0,
+            "sft_price": 109.0,
+            "brand_pricing": {}
+        },
+        {
+            "sl_no": 54,
+            "description": "Acrylic(155/SFT)",
+            "size": "4 ' x8 ''",
+            "unit": "Per sheet",
+            "rate_gst": 5000.0,
+            "sft_price": 156.0,
+            "brand_pricing": {}
+        }
+    ],
+    "labour": [
+        {
+            "sl_no": 1,
+            "description": "Carpenter",
+            "unit": "man-day",
+            "wages_inc_pf": 800.0
+        },
+        {
+            "sl_no": 2,
+            "description": "Helper",
+            "unit": "man-day",
+            "wages_inc_pf": 600.0
+        },
+        {
+            "sl_no": 3,
+            "description": "Storage",
+            "unit": "SFT",
+            "wages_inc_pf": "280 /sft"
+        },
+        {
+            "sl_no": 4,
+            "description": "Open storage",
+            "unit": "SFT",
+            "wages_inc_pf": "250 /sft"
+        },
+        {
+            "sl_no": 5,
+            "description": "Architrev -Direct",
+            "unit": "RFT",
+            "wages_inc_pf": "130 /sft"
+        },
+        {
+            "sl_no": 6,
+            "description": "Architrev -With frame",
+            "unit": "RFT",
+            "wages_inc_pf": "160 /sft"
+        },
+        {
+            "sl_no": 5,
+            "description": "PLAINING",
+            "unit": "RFT",
+            "wages_inc_pf": 15.0
+        },
+        {
+            "sl_no": 6,
+            "description": "BEVELLING",
+            "unit": "RFT",
+            "wages_inc_pf": 50.0
+        }
+    ],
+    "hardware_and_finishes": [
+        {
+            "category": null,
+            "sl_no": 55,
+            "description": "PU Coating",
+            "size": null,
+            "unit": "Sft.",
+            "rate": 280.0,
+            "extra_info": [
+                "Facia"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 56,
+            "description": "Duco",
+            "size": null,
+            "unit": "Sft.",
+            "rate": 220.0,
+            "extra_info": [
+                "Facia"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 57,
+            "description": "Bronze Mirror -Side Polish",
+            "size": null,
+            "unit": "sft",
+            "rate": 190.0,
+            "extra_info": [
+                "169"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 58,
+            "description": "Bronze Mirror - Corner Bevelled",
+            "size": null,
+            "unit": "sft",
+            "rate": 210.0,
+            "extra_info": [
+                "169"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 57,
+            "description": "5mm Mirror -Side Polish",
+            "size": null,
+            "unit": "sft",
+            "rate": 150.0,
+            "extra_info": [
+                "120"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 58,
+            "description": "5mm Mirror -Corner Bevelled",
+            "size": null,
+            "unit": "sft",
+            "rate": 180.0,
+            "extra_info": [
+                "120"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 59,
+            "description": "Melamine (on veneer )",
+            "size": null,
+            "unit": "Sft.",
+            "rate": 100.0,
+            "extra_info": [
+                "Facia"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 60,
+            "description": "Jaali-6mm MDF+DUCO",
+            "size": null,
+            "unit": "sft",
+            "rate": 785.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 61,
+            "description": "Jaali-6mm MDF+Enamel",
+            "size": null,
+            "unit": "sft",
+            "rate": 365.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 62,
+            "description": "Jaali-6mm WPC +Enamel( inside only )",
+            "size": null,
+            "unit": "sft",
+            "rate": 300.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 63,
+            "description": "Jaali-8mm MDF+DUCO",
+            "size": null,
+            "unit": "sft",
+            "rate": 800.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 64,
+            "description": "Jaali-8mm MDF+Enamel",
+            "size": null,
+            "unit": "sft",
+            "rate": 400.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 65,
+            "description": "Jaali-8mm WPC +Enamel( inside only )",
+            "size": null,
+            "unit": "sft",
+            "rate": 310.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 66,
+            "description": "Jaali-12mm MDF+DUCO",
+            "size": null,
+            "unit": "sft",
+            "rate": 840.0,
+            "extra_info": [
+                "65"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 67,
+            "description": "Jaali-12mm MDF+Enamel",
+            "size": null,
+            "unit": "sft",
+            "rate": 450.0,
+            "extra_info": [
+                "72"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 68,
+            "description": "Jaali-12mm WPC +Enamel( inside only )",
+            "size": null,
+            "unit": "sft",
+            "rate": 325.0,
+            "extra_info": [
+                "98"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 69,
+            "description": "Jaali-18mm MDF+DUCO",
+            "size": null,
+            "unit": "sft",
+            "rate": 880.0,
+            "extra_info": [
+                "182"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 70,
+            "description": "Jaali-18mm MDF+Enamel",
+            "size": null,
+            "unit": "sft",
+            "rate": 500.0,
+            "extra_info": [
+                "195"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 71,
+            "description": "Jaali-18mm WPC +Enamel( inside only )",
+            "size": null,
+            "unit": "sft",
+            "rate": 410.0,
+            "extra_info": [
+                "208"
+            ]
+        },
+        {
+            "category": null,
+            "sl_no": 72,
+            "description": "Jaali(18mm MDF )",
+            "size": null,
+            "unit": "sft",
+            "rate": 1100.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 73,
+            "description": "Jaali(25mm MDF )",
+            "size": null,
+            "unit": "sft",
+            "rate": 1200.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 74,
+            "description": "Beading",
+            "size": null,
+            "unit": "rft",
+            "rate": 8.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 75,
+            "description": "Fevicol (SH+SR)",
+            "size": null,
+            "unit": "Kg",
+            "rate": 245.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 76,
+            "description": "Nails",
+            "size": null,
+            "unit": "Kg",
+            "rate": 80.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 77,
+            "description": "Handle",
+            "size": null,
+            "unit": "Nos",
+            "rate": 200.0,
+            "extra_info": null
+        },
+        {
+            "category": null,
+            "sl_no": 78,
+            "description": "Knobs",
+            "size": null,
+            "unit": "Nos",
+            "rate": 150.0,
+            "extra_info": null
+        },
+        {
+            "category": "Hinges",
+            "sl_no": 80,
+            "description": "Ebco-Non soft",
+            "size": null,
+            "unit": "Set",
+            "rate": 100.0,
+            "extra_info": null
+        },
+        {
+            "category": "Hinges",
+            "sl_no": 81,
+            "description": "Ebco-Soft",
+            "size": null,
+            "unit": "Set",
+            "rate": 180.0,
+            "extra_info": null
+        },
+        {
+            "category": "Hinges",
+            "sl_no": 82,
+            "description": "Hettich -Soft",
+            "size": null,
+            "unit": "Set",
+            "rate": 330.0,
+            "extra_info": null
+        },
+        {
+            "category": "Hinges",
+            "sl_no": 83,
+            "description": "Epco Locks",
+            "size": null,
+            "unit": "Nos",
+            "rate": 174.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 85,
+            "description": "EBCO - 200mm-Normal",
+            "size": "8 ''",
+            "unit": "Set",
+            "rate": 149.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 86,
+            "description": "EBCO - 250mm--Normal",
+            "size": "10 ''",
+            "unit": "Set",
+            "rate": 168.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 87,
+            "description": "EBCO - 300mm-Normal",
+            "size": "12 ''",
+            "unit": "Set",
+            "rate": 202.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 88,
+            "description": "EBCO - 350mm-Normal",
+            "size": "14 ''",
+            "unit": "Set",
+            "rate": 232.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 89,
+            "description": "EBCO - 400mm-Normal",
+            "size": "16 ''",
+            "unit": "Set",
+            "rate": 248.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 90,
+            "description": "EBCO - 450mm-Normal",
+            "size": "18 ''",
+            "unit": "Set",
+            "rate": 279.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 91,
+            "description": "EBCO - 500mm-Normal",
+            "size": "20 ''",
+            "unit": "Set",
+            "rate": 309.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 92,
+            "description": "EBCO - 550mm-Normal",
+            "size": "22 ''",
+            "unit": "Set",
+            "rate": 340.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 93,
+            "description": "EBCO - 600mm-Normal",
+            "size": "24 ''",
+            "unit": "Set",
+            "rate": 371.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 94,
+            "description": "EBCO - 300mm-soft close",
+            "size": "12 ''",
+            "unit": "Set",
+            "rate": 336.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 95,
+            "description": "EBCO - 350mm-soft close",
+            "size": "14 ''",
+            "unit": "Set",
+            "rate": 372.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 96,
+            "description": "EBCO - 400mm-soft close",
+            "size": "16 ''",
+            "unit": "Set",
+            "rate": 408.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 97,
+            "description": "EBCO - 450mm-soft close",
+            "size": "18 ''",
+            "unit": "Set",
+            "rate": 443.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 98,
+            "description": "EBCO - 500mm-soft close",
+            "size": "20 ''",
+            "unit": "Set",
+            "rate": 478.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 99,
+            "description": "EBCO - 550mm-soft close",
+            "size": "22 ''",
+            "unit": "Set",
+            "rate": 520.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 100,
+            "description": "EBCO - 600mm-soft close",
+            "size": "24 ''",
+            "unit": "Set",
+            "rate": 555.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 101,
+            "description": "hafele - 300mm",
+            "size": "12 ''",
+            "unit": "Set",
+            "rate": 737.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 102,
+            "description": "hafele - 350mm",
+            "size": "14 ''",
+            "unit": "Set",
+            "rate": 762.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 103,
+            "description": "hafele - 400mm",
+            "size": "16 ''",
+            "unit": "Set",
+            "rate": 791.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 104,
+            "description": "hafele - 450mm",
+            "size": "18 ''",
+            "unit": "Set",
+            "rate": 805.0,
+            "extra_info": null
+        },
+        {
+            "category": "Channels for drawers",
+            "sl_no": 105,
+            "description": "hafele - 500mm",
+            "size": "20 ''",
+            "unit": "Set",
+            "rate": 939.0,
+            "extra_info": null
+        },
+        {
+            "category": "Others",
+            "sl_no": 107,
+            "description": "Legs- SS/Rubber",
+            "size": null,
+            "unit": "nos",
+            "rate": 60.0,
+            "extra_info": null
+        },
+        {
+            "category": "Others",
+            "sl_no": 108,
+            "description": "Wooden Ghatta",
+            "size": null,
+            "unit": "nos",
+            "rate": 2.0,
+            "extra_info": null
+        },
+        {
+            "category": "Glass with plaining",
+            "sl_no": 110,
+            "description": "5mm Clear Glass",
+            "size": null,
+            "unit": "sft",
+            "rate": 93.0,
+            "extra_info": [
+                "65"
+            ]
+        },
+        {
+            "category": "Glass with plaining",
+            "sl_no": 111,
+            "description": "6mm Clear Glass",
+            "size": null,
+            "unit": "sft",
+            "rate": 103.0,
+            "extra_info": [
+                "72"
+            ]
+        },
+        {
+            "category": "Glass with plaining",
+            "sl_no": 112,
+            "description": "8mm Clear Glass",
+            "size": null,
+            "unit": "sft",
+            "rate": 140.0,
+            "extra_info": [
+                "98"
+            ]
+        },
+        {
+            "category": "Glass with plaining",
+            "sl_no": 113,
+            "description": "8mm Clear Touhghen Glass",
+            "size": null,
+            "unit": "sft",
+            "rate": 260.0,
+            "extra_info": [
+                "182"
+            ]
+        },
+        {
+            "category": "Glass with plaining",
+            "sl_no": 114,
+            "description": "10mm Clear Touhghen Glass",
+            "size": null,
+            "unit": "sft",
+            "rate": 279.0,
+            "extra_info": [
+                "195"
+            ]
+        },
+        {
+            "category": "Glass with plaining",
+            "sl_no": 115,
+            "description": "12mm Clear Touhghen Glass",
+            "size": null,
+            "unit": "sft",
+            "rate": 298.0,
+            "extra_info": [
+                "208"
+            ]
+        },
+        {
+            "category": "Mirror",
+            "sl_no": 117,
+            "description": "5mm Brown Mirror",
+            "size": null,
+            "unit": "sft",
+            "rate": 180.0,
+            "extra_info": null
+        },
+        {
+            "category": "Mirror",
+            "sl_no": 118,
+            "description": "5mm Mirror",
+            "size": null,
+            "unit": "sft",
+            "rate": 150.0,
+            "extra_info": null
+        },
+        {
+            "category": "Polish",
+            "sl_no": 120,
+            "description": "PU Coating",
+            "size": null,
+            "unit": "sft",
+            "rate": 270.0,
+            "extra_info": null
+        },
+        {
+            "category": "Polish",
+            "sl_no": 121,
+            "description": "Melamine",
+            "size": null,
+            "unit": "sft",
+            "rate": 120.0,
+            "extra_info": null
+        },
+        {
+            "category": "Polish",
+            "sl_no": 122,
+            "description": "Duco",
+            "size": null,
+            "unit": "sft",
+            "rate": 250.0,
+            "extra_info": null
+        }
+    ]
+}

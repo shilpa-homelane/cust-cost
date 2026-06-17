@@ -1,0 +1,32 @@
+[project]
+name = "custom_costing_backend"
+version = "0.1.0"
+description = "Backend for the Custom Costing Tool v1"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn>=0.30.1",
+    "pydantic>=2.7.4",
+    "sqlalchemy>=2.0.30",
+    "pydantic-settings>=2.3.4",
+    "python-multipart>=0.0.9",
+    "pdf2image>=1.17.0",
+    "pdfplumber>=0.11.0",
+    "pillow>=10.3.0",
+    "google-genai>=0.2.0",
+    "python-dotenv>=1.0.1"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.2",
+    "pytest-asyncio>=0.23.7"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
