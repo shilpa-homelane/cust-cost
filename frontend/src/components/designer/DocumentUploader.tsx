@@ -45,12 +45,12 @@ export function DocumentUploader({
   };
 
   return (
-    <div className="w-full h-full flex flex-col overflow-hidden">
+    <div className="w-full flex flex-col">
       <div className="flex-shrink-0 px-6 py-4 border-b border-slate-200 bg-white">
         <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Source Document</h2>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-5 bg-slate-50 flex flex-col gap-4">
+      <div className="p-5 bg-slate-50 flex flex-col gap-4">
         {!file ? (
           <div
             className="flex-1 border-2 border-dashed border-slate-300 rounded-2xl bg-white flex flex-col items-center justify-center p-12 text-center hover:border-indigo-400 hover:bg-indigo-50/30 transition-colors cursor-pointer group min-h-[300px]"
@@ -75,8 +75,8 @@ export function DocumentUploader({
             </label>
           </div>
         ) : (
-          <div className="flex-1 flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-shrink-0">
+          <div className="flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-2 min-w-0">
                 <FileText className="w-4 h-4 text-slate-400 flex-shrink-0" />
                 <span className="text-sm font-medium text-slate-700 truncate">{file.name}</span>
@@ -90,9 +90,9 @@ export function DocumentUploader({
               </button>
             </div>
 
-            <div className="flex-1 p-4 flex flex-col gap-4 overflow-y-auto">
+            <div className="p-4 flex flex-col gap-4">
               <div
-                className="flex-1 min-h-[200px] flex items-center justify-center bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative cursor-pointer group"
+                className="min-h-[200px] flex items-center justify-center bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative cursor-pointer group"
                 onClick={previewUrl ? onPreviewClick : undefined}
               >
                 {previewUrl ? (

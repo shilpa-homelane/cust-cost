@@ -1,4 +1,5 @@
-import { LayoutDashboard, FileText, BookOpen, Settings, Eye, EyeOff } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { LayoutDashboard, FileText, BookOpen, Settings, Eye, EyeOff, ChevronDown } from 'lucide-react';
 import { ToastProvider } from '../ui/Toast';
 import type { Role } from '../../App';
 
@@ -15,23 +16,23 @@ const NAV_ITEMS: NavItem[] = [
   {
     id: 'designer',
     label: 'Designer Portal',
-    icon: <LayoutDashboard className="w-5 h-5" />,
+    icon: <LayoutDashboard className="w-4 h-4" />,
   },
   {
     id: 'quotes',
     label: 'My Quotes',
-    icon: <FileText className="w-5 h-5" />,
+    icon: <FileText className="w-4 h-4" />,
   },
   {
     id: 'admin',
     label: 'Rate Database',
-    icon: <Settings className="w-5 h-5" />,
+    icon: <Settings className="w-4 h-4" />,
     roles: ['Procurement Analyst', 'Admin'],
   },
   {
     id: 'features',
     label: 'Feature Library',
-    icon: <BookOpen className="w-5 h-5" />,
+    icon: <BookOpen className="w-4 h-4" />,
     roles: ['D2M Analyst', 'Senior Designer', 'Admin'],
   },
 ];
@@ -55,42 +56,44 @@ export function AppShell({
   onTogglePresentation,
   children,
 }: AppShellProps) {
+  const [navOpen, setNavOpen] = useState(false);
+  const flyoutRef = useRef<HTMLDivElement>(null);
+
   const visibleNav = NAV_ITEMS.filter(item => !item.roles || item.roles.includes(role));
 
   const handleRoleChange = (newRole: Role) => {
     onRoleChange(newRole);
-    const hasAccess = NAV_ITEMS.find(n => n.id === view);
-    if (hasAccess?.roles && !hasAccess.roles.includes(newRole)) {
+    const currentNavItem = NAV_ITEMS.find(n => n.id === view);
+    if (currentNavItem?.roles && !currentNavItem.roles.includes(newRole)) {
       onViewChange('designer');
     }
   };
+
+  const handleNavSelect = (v: View) => {
+    onViewChange(v);
+    setNavOpen(false);
+  };
+
+  useEffect(() => {
+    if (!navOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (!flyoutRef.current?.contains(e.target as Node)) setNavOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [navOpen]);
 
   return (
     <ToastProvider>
       <div className="h-screen w-full overflow-hidden flex flex-col bg-slate-50 font-sans">
         {/* Top Header */}
-        <header className="flex-shrink-0 h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 z-20 shadow-sm">
+        <header className="flex-shrink-0 h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 z-20 shadow-sm no-print">
+          {/* Left: logo + title + role dropdown */}
           <div className="flex items-center gap-3">
             <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
               <span className="text-white text-xs font-bold">CC</span>
             </div>
             <span className="text-sm font-semibold text-slate-900 tracking-tight hidden sm:block">Custom Costing</span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {view === 'designer' && (
-              <button
-                onClick={onTogglePresentation}
-                className={`no-print flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                  presentationMode
-                    ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-transparent'
-                }`}
-              >
-                {presentationMode ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-                <span className="hidden sm:inline">Presentation {presentationMode ? 'ON' : 'OFF'}</span>
-              </button>
-            )}
 
             <select
               value={role}
@@ -104,49 +107,72 @@ export function AppShell({
               <option value="Admin">Admin</option>
             </select>
           </div>
-        </header>
 
-        <div className="flex-1 flex overflow-hidden">
-          {/* Left Sidebar */}
-          <aside className="flex-shrink-0 w-56 bg-white border-r border-slate-200 flex flex-col py-3 no-print">
-            <nav className="flex-1 px-2 space-y-0.5">
-              {visibleNav.map(item => {
-                const active = view === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => onViewChange(item.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
-                      active
-                        ? 'bg-indigo-50 text-indigo-700'
-                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                    }`}
-                  >
-                    <span className={active ? 'text-indigo-600' : 'text-slate-400'}>{item.icon}</span>
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
+          {/* Right: presentation toggle + user avatar nav */}
+          <div className="flex items-center gap-2">
+            {view === 'designer' && (
+              <button
+                onClick={onTogglePresentation}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                  presentationMode
+                    ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-transparent'
+                }`}
+              >
+                {presentationMode ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                <span className="hidden sm:inline">Presentation {presentationMode ? 'ON' : 'OFF'}</span>
+              </button>
+            )}
 
-            <div className="px-3 pb-2 pt-3 border-t border-slate-100 mt-2">
-              <div className="flex items-center gap-2 px-2 py-2">
+            {/* User avatar + flyout nav */}
+            <div className="relative" ref={flyoutRef}>
+              <button
+                onClick={() => setNavOpen(o => !o)}
+                className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 transition-colors group"
+                aria-haspopup="true"
+                aria-expanded={navOpen}
+              >
                 <div className="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
                   <span className="text-indigo-700 text-xs font-semibold">{role.charAt(0)}</span>
                 </div>
-                <div className="min-w-0">
-                  <p className="text-xs font-medium text-slate-800 truncate">{role}</p>
-                  <p className="text-[10px] text-slate-400">Active session</p>
+                <div className="hidden sm:block text-left">
+                  <p className="text-xs font-medium text-slate-800 leading-tight">{role}</p>
+                  <p className="text-[10px] text-slate-400 leading-tight">Active session</p>
                 </div>
-              </div>
-            </div>
-          </aside>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-150 ${navOpen ? 'rotate-180' : ''}`} />
+              </button>
 
-          {/* Main Content */}
-          <main className="flex-1 overflow-hidden flex flex-col">
-            {children}
-          </main>
-        </div>
+              {navOpen && (
+                <div className="absolute right-0 top-full mt-1.5 w-52 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-50">
+                  <p className="px-3 pt-1 pb-2 text-[10px] font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-100 mb-1">Navigation</p>
+                  {visibleNav.map(item => {
+                    const active = view === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => handleNavSelect(item.id)}
+                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors text-left ${
+                          active
+                            ? 'bg-indigo-50 text-indigo-700'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        }`}
+                      >
+                        <span className={active ? 'text-indigo-600' : 'text-slate-400'}>{item.icon}</span>
+                        <span>{item.label}</span>
+                        {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-500" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content — full width, no sidebar */}
+        <main className="flex-1 overflow-hidden flex flex-col">
+          {children}
+        </main>
       </div>
     </ToastProvider>
   );

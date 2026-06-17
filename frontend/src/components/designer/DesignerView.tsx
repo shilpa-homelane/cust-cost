@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, ChevronLeft, ChevronRight, Pin, PinOff, Save, Printer } from 'lucide-react';
 import { DocumentUploader } from './DocumentUploader';
 import { ExtractionPanel } from './ExtractionPanel';
 import { QuotePanel } from './QuotePanel';
+import { Modal } from '../ui/Modal';
 import { useToast } from '../ui/Toast';
 import type { Role } from '../../App';
 
@@ -49,7 +50,8 @@ interface DesignerViewProps {
   loadedQuote: any;
 }
 
-const DEFAULT_SPLIT = 60;
+const LS_COLLAPSED = 'cc_left_pane_collapsed';
+const LS_PINNED = 'cc_left_pane_pinned';
 
 export function DesignerView({ role, presentationMode, loadedQuote }: DesignerViewProps) {
   const { showToast } = useToast();
@@ -62,35 +64,34 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
   const [quoteResult, setQuoteResult] = useState<QuoteResponse | null>(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [allFeatures, setAllFeatures] = useState<any[]>([]);
-  const [splitPct, setSplitPct] = useState(DEFAULT_SPLIT);
-  const rightPaneRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
 
-  const handleDividerMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    isDragging.current = true;
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
+    try { return localStorage.getItem(LS_COLLAPSED) === 'true'; } catch { return false; }
+  });
+  const [isPinned, setIsPinned] = useState<boolean>(() => {
+    try { return localStorage.getItem(LS_PINNED) === 'true'; } catch { return false; }
+  });
 
-    const onMouseMove = (ev: MouseEvent) => {
-      if (!isDragging.current || !rightPaneRef.current) return;
-      const rect = rightPaneRef.current.getBoundingClientRect();
-      const offsetY = ev.clientY - rect.top;
-      const pct = Math.min(Math.max((offsetY / rect.height) * 100, 20), 80);
-      setSplitPct(pct);
-    };
+  const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [customerName, setCustomerName] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
-    const onMouseUp = () => {
-      isDragging.current = false;
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-    };
+  const handleToggleCollapse = () => {
+    if (isPinned) return;
+    const next = !isCollapsed;
+    setIsCollapsed(next);
+    try { localStorage.setItem(LS_COLLAPSED, String(next)); } catch {}
+  };
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  }, []);
-
-  const handleDividerDoubleClick = useCallback(() => {
-    setSplitPct(DEFAULT_SPLIT);
-  }, []);
+  const handleTogglePin = () => {
+    const next = !isPinned;
+    setIsPinned(next);
+    try { localStorage.setItem(LS_PINNED, String(next)); } catch {}
+    if (next && isCollapsed) {
+      setIsCollapsed(false);
+      try { localStorage.setItem(LS_COLLAPSED, 'false'); } catch {}
+    }
+  };
 
   useEffect(() => {
     if (!loadedQuote) return;
@@ -186,10 +187,10 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
     }
   };
 
-  const handleSaveDraft = async (customerName: string) => {
+  const handleSaveDraft = async (name: string) => {
     if (!extraction || !quoteResult) return;
     const payload = {
-      customer_name: customerName,
+      customer_name: name,
       brand: extraction.document_classification?.brand || 'HomeLane',
       total_price: quoteResult.quote.total_price_incl_gst,
       extraction_data: extraction,
@@ -203,75 +204,152 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
     if (!res.ok) throw new Error('Failed to save draft');
   };
 
+  const handleSaveSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSaving(true);
+    try {
+      const name = customerName.trim() || `Draft – ${new Date().toLocaleDateString()}`;
+      await handleSaveDraft(name);
+      setSaveModalOpen(false);
+      setCustomerName('');
+      showToast('Quote saved successfully.', 'success');
+    } catch {
+      showToast('Could not save quote. Please try again.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const leftPaneWidth = isCollapsed ? 44 : 420;
+
   return (
     <>
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Pane */}
-        <div className="w-1/2 border-r border-slate-200 flex flex-col overflow-hidden">
-          <DocumentUploader
-            file={file}
-            previewUrl={previewUrl}
-            notes={notes}
-            isExtracting={isExtracting}
-            onFileChange={handleFileChange}
-            onNotesChange={setNotes}
-            onExtract={handleExtract}
-            onPreviewClick={() => setIsImageModalOpen(true)}
-          />
+        {/* Left Pane — collapsible, pinnable; contains Source Document stacked above Extracted Specs */}
+        <div
+          className="flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden no-print"
+          style={{ width: leftPaneWidth, transition: 'width 200ms ease' }}
+        >
+          {/* Left pane header bar */}
+          <div className="flex-shrink-0 flex items-center gap-1 px-2 py-2 border-b border-slate-200 bg-white z-10">
+            <button
+              onClick={handleToggleCollapse}
+              disabled={isPinned}
+              title={isPinned ? 'Unpin to enable collapse' : isCollapsed ? 'Expand panel' : 'Collapse panel'}
+              className={`p-1.5 rounded-lg transition-colors flex-shrink-0 ${
+                isPinned
+                  ? 'text-slate-300 cursor-not-allowed'
+                  : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'
+              }`}
+            >
+              {isCollapsed
+                ? <ChevronRight className="w-4 h-4" />
+                : <ChevronLeft className="w-4 h-4" />
+              }
+            </button>
+
+            {!isCollapsed && (
+              <>
+                <button
+                  onClick={handleTogglePin}
+                  title={isPinned ? 'Unpin panel' : 'Pin panel (prevent collapse)'}
+                  className={`p-1.5 rounded-lg transition-colors flex-shrink-0 ${
+                    isPinned
+                      ? 'text-indigo-600 bg-indigo-50'
+                      : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                  }`}
+                >
+                  {isPinned ? <Pin className="w-3.5 h-3.5" /> : <PinOff className="w-3.5 h-3.5" />}
+                </button>
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest ml-1 truncate">
+                  Document & Specs
+                </span>
+              </>
+            )}
+          </div>
+
+          {/* Left pane content — Source Document + Extracted Specs stacked, combined scroll */}
+          {!isCollapsed && (
+            <div className="flex-1 overflow-y-auto">
+              {/* Source Document section */}
+              <div className="border-b border-slate-200">
+                <DocumentUploader
+                  file={file}
+                  previewUrl={previewUrl}
+                  notes={notes}
+                  isExtracting={isExtracting}
+                  onFileChange={handleFileChange}
+                  onNotesChange={setNotes}
+                  onExtract={handleExtract}
+                  onPreviewClick={() => setIsImageModalOpen(true)}
+                />
+              </div>
+
+              {/* Extracted Specifications section */}
+              <div>
+                <div className="px-6 py-3 border-b border-slate-100 bg-white sticky top-0 z-10">
+                  <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Extracted Specifications</h2>
+                </div>
+                <div className="p-6">
+                  <ExtractionPanel
+                    isExtracting={isExtracting}
+                    extraction={extraction}
+                    allFeatures={allFeatures}
+                    onExtractionChange={handleExtractionChange}
+                    onTogglePremiumFeature={togglePremiumFeature}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Right Pane */}
-        <div ref={rightPaneRef} className="w-1/2 bg-white flex flex-col overflow-hidden">
-          {/* Specs Section — resizable top portion */}
-          <div className="min-h-0 flex flex-col overflow-hidden" style={{ height: `${splitPct}%` }}>
-            <div className="flex-shrink-0 px-6 py-3 border-b border-slate-100 bg-white">
-              <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Extracted Specifications</h2>
-            </div>
-            <div className="flex-1 overflow-y-auto p-6">
-              <ExtractionPanel
-                isExtracting={isExtracting}
-                extraction={extraction}
-                allFeatures={allFeatures}
-                onExtractionChange={handleExtractionChange}
-                onTogglePremiumFeature={togglePremiumFeature}
-              />
-            </div>
+        {/* Right Pane — Quote (fills remaining space) */}
+        <div className="flex-1 flex flex-col overflow-hidden bg-slate-50 min-w-0">
+          {/* Quote panel header */}
+          <div className="flex-shrink-0 px-6 py-3 border-b border-slate-200 bg-white flex items-center justify-between">
+            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Quote</h2>
           </div>
 
-          {/* Drag Divider */}
-          <div
-            className="flex-shrink-0 h-1.5 bg-slate-200 hover:bg-indigo-400 active:bg-indigo-500 cursor-row-resize flex items-center justify-center group transition-colors duration-150 select-none"
-            onMouseDown={handleDividerMouseDown}
-            onDoubleClick={handleDividerDoubleClick}
-            title="Drag to resize · Double-click to reset"
-            aria-label="Resize divider between Specs and Quote panels"
-            role="separator"
-            aria-orientation="horizontal"
-          >
-            <div className="w-8 h-0.5 rounded-full bg-slate-400 group-hover:bg-white group-active:bg-white transition-colors duration-150" />
+          {/* Scrollable quote content */}
+          <div className="flex-1 overflow-y-auto">
+            <QuotePanel
+              isQuoting={isQuoting}
+              quoteResult={quoteResult}
+              extraction={extraction}
+              presentationMode={presentationMode}
+            />
           </div>
 
-          {/* Quote Section — resizable bottom portion */}
-          <div className="min-h-0 flex flex-col overflow-hidden bg-slate-50" style={{ height: `${100 - splitPct}%` }}>
-            <div className="flex-shrink-0 px-6 py-3 border-b border-slate-200 bg-white flex items-center justify-between">
-              <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Quote</h2>
+          {/* Sticky footer — always visible */}
+          {(quoteResult || isQuoting) && (
+            <div className="flex-shrink-0 border-t border-slate-200 bg-white px-6 py-3 flex items-center justify-between no-print">
+              <div>
+                <p className="text-xs text-slate-500 font-medium">Total incl. GST</p>
+                <p className="text-lg font-bold text-slate-900 tracking-tight">
+                  {isQuoting ? '—' : formatCurrency(quoteResult?.quote.total_price_incl_gst)}
+                </p>
+              </div>
               {quoteResult && (
-                <span className="text-xs font-semibold text-slate-400">
-                  {formatCurrency(quoteResult.quote.total_price_incl_gst)}
-                  <span className="font-normal ml-1">incl. GST</span>
-                </span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setSaveModalOpen(true)}
+                    className="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors bg-white"
+                  >
+                    <Save className="w-4 h-4" />
+                    Save Draft
+                  </button>
+                  <button
+                    onClick={() => window.print()}
+                    className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 transition-colors shadow-sm"
+                  >
+                    <Printer className="w-4 h-4" />
+                    Export PDF
+                  </button>
+                </div>
               )}
             </div>
-            <div className="flex-1 overflow-y-auto p-6">
-              <QuotePanel
-                isQuoting={isQuoting}
-                quoteResult={quoteResult}
-                extraction={extraction}
-                presentationMode={presentationMode}
-                onSaveDraft={handleSaveDraft}
-              />
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -288,10 +366,52 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
         </div>
       )}
 
+      {/* Save Draft Modal */}
+      <Modal
+        open={saveModalOpen}
+        onClose={() => setSaveModalOpen(false)}
+        title="Save Quote Draft"
+        subtitle="Enter a customer name or project reference for this quote."
+        maxWidth="max-w-md"
+        footer={
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={() => setSaveModalOpen(false)}
+              className="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              form="save-draft-form"
+              type="submit"
+              disabled={isSaving}
+              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors shadow-sm disabled:opacity-50"
+            >
+              <Save className="w-4 h-4" />
+              {isSaving ? 'Saving…' : 'Save Draft'}
+            </button>
+          </div>
+        }
+      >
+        <form id="save-draft-form" onSubmit={handleSaveSubmit}>
+          <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1.5">
+            Customer Name / Project Reference
+          </label>
+          <input
+            type="text"
+            value={customerName}
+            onChange={e => setCustomerName(e.target.value)}
+            placeholder={`Draft – ${new Date().toLocaleDateString()}`}
+            className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800 placeholder:text-slate-400"
+            autoFocus
+          />
+        </form>
+      </Modal>
+
       {/* Customer-facing Quote PDF (Only printed, hidden on screen) */}
       {quoteResult && (
         <div className={`printable-area p-8 max-w-4xl mx-auto bg-white text-gray-800 ${presentationMode ? 'print:block' : 'hidden'}`} style={{ display: 'none' }}>
-          {/* Brand Header */}
           <div className="flex justify-between items-start border-b-2 border-gray-200 pb-6 mb-6">
             <div>
               {quoteResult.quote.brand === "HomeLane" ? (
@@ -318,7 +438,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           </div>
 
-          {/* Project & Client Info Grid */}
           <div className="grid grid-cols-2 gap-6 mb-8 bg-gray-50 p-4 rounded-xl border border-gray-100">
             <div>
               <p className="text-xs font-semibold text-gray-500 uppercase">Project details</p>
@@ -335,7 +454,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           </div>
 
-          {/* Core Specifications */}
           <div className="mb-8">
             <h3 className="text-xs font-semibold text-gray-800 uppercase tracking-wider border-b border-gray-200 pb-2 mb-4">Unit Specifications</h3>
             <div className="grid grid-cols-2 gap-y-4 gap-x-8">
@@ -363,7 +481,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           </div>
 
-          {/* Component Summary */}
           <div className="mb-8">
             <h3 className="text-xs font-semibold text-gray-800 uppercase tracking-wider border-b border-gray-200 pb-2 mb-4">Components & Counts</h3>
             <div className="grid grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg">
@@ -384,7 +501,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           </div>
 
-          {/* Premium Features List */}
           {extraction?.premium_features && extraction.premium_features.length > 0 && (
             <div className="mb-8">
               <h3 className="text-xs font-semibold text-gray-800 uppercase tracking-wider border-b border-gray-200 pb-2 mb-4">Premium / Custom Detailing</h3>
@@ -406,7 +522,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           )}
 
-          {/* Pricing Highlight Box */}
           <div className={`p-6 rounded-xl border mb-8 text-center ${
             quoteResult.quote.brand === "HomeLane" ? "bg-orange-50 border-orange-200" :
             quoteResult.quote.brand === "DesignCafe" ? "bg-teal-50 border-teal-200" :
@@ -417,7 +532,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             <p className="text-xxs text-gray-500 mt-2">Inclusive of GST @ 18%, materials, labor, overheads, transportation, and delivery.</p>
           </div>
 
-          {/* Fine Print / Footer */}
           <div className="border-t border-gray-200 pt-6 text-center text-xxs text-gray-400">
             <p className="mb-1">This is an automated modular furniture cost estimation generated by the Custom Costing Tool.</p>
             <p className="mb-1">Estimate valid for 30 days. Final pricing is subject to technical verification by the D2M site team.</p>
@@ -443,7 +557,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           </div>
 
-          {/* Audit Details */}
           <div className="grid grid-cols-3 gap-6 mb-8 bg-gray-50 p-4 rounded-lg border border-gray-100 text-xxs">
             <div>
               <p className="font-semibold text-gray-500 uppercase">Unit specifications</p>
@@ -463,7 +576,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           </div>
 
-          {/* Detailed Costed BOM */}
           <div className="mb-8">
             <h3 className="text-xs font-semibold text-gray-800 uppercase tracking-wider mb-3">Costed Bill of Materials (BOM)</h3>
             <table className="w-full text-xxs text-left border-collapse border border-gray-200">
@@ -487,7 +599,7 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
                     <td className="p-2 border-r border-gray-200 text-right">{formatQuantity(item.quantity, item.unit)}</td>
                     <td className="p-2 border-r border-gray-200 text-right">{item.wastage_pct}%</td>
                     <td className="p-2 border-r border-gray-200 text-right">{formatCurrency(item.rate)}</td>
-                    <td className="p-2 text-right font-medium">{formatCurrency(item.line_subtotal)}</td>
+                    <td className="p-2 text-right font-semibold">{formatCurrency(item.line_subtotal)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -495,8 +607,8 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
           </div>
 
           {/* Margins & Adjustments Summary */}
-          <div className="mb-8 flex justify-end">
-            <table className="w-1/2 text-xxs border border-gray-200">
+          <div className="flex justify-end mb-8">
+            <table className="w-1/2 text-xxs text-left border-collapse border border-gray-200">
               <tbody>
                 <tr className="border-b border-gray-100">
                   <td className="p-2 font-medium bg-gray-50">Base Material & Labor COGS:</td>
@@ -538,7 +650,6 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </table>
           </div>
 
-          {/* Footer warning */}
           <div className="border-t border-red-300 pt-6 text-center text-xxs text-red-600 font-semibold uppercase tracking-wider">
             <p>Confidential Internal Use Only. Do not distribute or display to customers.</p>
           </div>
