@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { X } from 'lucide-react';
 import { DocumentUploader } from './DocumentUploader';
 import { ExtractionPanel } from './ExtractionPanel';
@@ -49,6 +49,8 @@ interface DesignerViewProps {
   loadedQuote: any;
 }
 
+const DEFAULT_SPLIT = 60;
+
 export function DesignerView({ role, presentationMode, loadedQuote }: DesignerViewProps) {
   const { showToast } = useToast();
   const [file, setFile] = useState<File | null>(null);
@@ -60,6 +62,35 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
   const [quoteResult, setQuoteResult] = useState<QuoteResponse | null>(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [allFeatures, setAllFeatures] = useState<any[]>([]);
+  const [splitPct, setSplitPct] = useState(DEFAULT_SPLIT);
+  const rightPaneRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+
+  const handleDividerMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    isDragging.current = true;
+
+    const onMouseMove = (ev: MouseEvent) => {
+      if (!isDragging.current || !rightPaneRef.current) return;
+      const rect = rightPaneRef.current.getBoundingClientRect();
+      const offsetY = ev.clientY - rect.top;
+      const pct = Math.min(Math.max((offsetY / rect.height) * 100, 20), 80);
+      setSplitPct(pct);
+    };
+
+    const onMouseUp = () => {
+      isDragging.current = false;
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, []);
+
+  const handleDividerDoubleClick = useCallback(() => {
+    setSplitPct(DEFAULT_SPLIT);
+  }, []);
 
   useEffect(() => {
     if (!loadedQuote) return;
@@ -190,9 +221,9 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
         </div>
 
         {/* Right Pane */}
-        <div className="w-1/2 bg-white flex flex-col overflow-hidden">
-          {/* Specs Section — top 60% */}
-          <div className="flex-[3] min-h-0 flex flex-col overflow-hidden border-b border-slate-200">
+        <div ref={rightPaneRef} className="w-1/2 bg-white flex flex-col overflow-hidden">
+          {/* Specs Section — resizable top portion */}
+          <div className="min-h-0 flex flex-col overflow-hidden" style={{ height: `${splitPct}%` }}>
             <div className="flex-shrink-0 px-6 py-3 border-b border-slate-100 bg-white">
               <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Extracted Specifications</h2>
             </div>
@@ -207,8 +238,21 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
             </div>
           </div>
 
-          {/* Quote Section — bottom 40% */}
-          <div className="flex-[2] min-h-0 flex flex-col overflow-hidden bg-slate-50">
+          {/* Drag Divider */}
+          <div
+            className="flex-shrink-0 h-1.5 bg-slate-200 hover:bg-indigo-400 active:bg-indigo-500 cursor-row-resize flex items-center justify-center group transition-colors duration-150 select-none"
+            onMouseDown={handleDividerMouseDown}
+            onDoubleClick={handleDividerDoubleClick}
+            title="Drag to resize · Double-click to reset"
+            aria-label="Resize divider between Specs and Quote panels"
+            role="separator"
+            aria-orientation="horizontal"
+          >
+            <div className="w-8 h-0.5 rounded-full bg-slate-400 group-hover:bg-white group-active:bg-white transition-colors duration-150" />
+          </div>
+
+          {/* Quote Section — resizable bottom portion */}
+          <div className="min-h-0 flex flex-col overflow-hidden bg-slate-50" style={{ height: `${100 - splitPct}%` }}>
             <div className="flex-shrink-0 px-6 py-3 border-b border-slate-200 bg-white flex items-center justify-between">
               <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Quote</h2>
               {quoteResult && (
