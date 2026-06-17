@@ -209,8 +209,14 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
 
           {/* Quote Section — bottom 40% */}
           <div className="flex-[2] min-h-0 flex flex-col overflow-hidden bg-slate-50">
-            <div className="flex-shrink-0 px-6 py-3 border-b border-slate-200 bg-white">
+            <div className="flex-shrink-0 px-6 py-3 border-b border-slate-200 bg-white flex items-center justify-between">
               <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Quote</h2>
+              {quoteResult && (
+                <span className="text-xs font-semibold text-slate-400">
+                  {formatCurrency(quoteResult.quote.total_price_incl_gst)}
+                  <span className="font-normal ml-1">incl. GST</span>
+                </span>
+              )}
             </div>
             <div className="flex-1 overflow-y-auto p-6">
               <QuotePanel
