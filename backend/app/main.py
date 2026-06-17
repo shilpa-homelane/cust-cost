@@ -17,7 +17,7 @@ load_dotenv() # Load variables from .env if present
 
 from app.extraction.service import ExtractionService
 from app.extraction.provider import MockProvider, GeminiProvider
-from app.routers import admin_rates, quotes, features
+from app.routers import admin_rates, quotes, features, settings
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -56,6 +56,7 @@ else:
 extraction_service = ExtractionService(provider=provider)
 
 app.include_router(admin_rates.router, prefix="/api/v1/admin", tags=["admin"])
+app.include_router(settings.router, prefix="/api/v1/admin", tags=["admin"])
 app.include_router(quotes.router, prefix="/api/v1/quotes", tags=["quotes"])
 app.include_router(features.router, prefix="/api/v1/features", tags=["features"])
 

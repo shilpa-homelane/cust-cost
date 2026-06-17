@@ -25,10 +25,12 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def init_db():
     from app.models.feature_db import FeatureLibraryItem, seed_features
+    from app.models.settings_db import VisibilitySettings, get_or_create_settings
     Base.metadata.create_all(bind=engine)
-    
+
     db = SessionLocal()
     try:
         seed_features(db)
+        get_or_create_settings(db)
     finally:
         db.close()

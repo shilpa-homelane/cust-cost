@@ -24,3 +24,13 @@ def require_d2m_analyst_access(x_user_role: str = Header(default="Designer")):
     if x_user_role not in allowed_roles:
         raise HTTPException(status_code=403, detail="Forbidden: Requires D2M Analyst or Admin role")
     return x_user_role
+
+
+def require_business_admin_access(x_user_role: str = Header(default="Designer")):
+    """
+    Raises a 403 Forbidden if the user is not a Business Admin or Admin.
+    """
+    allowed_roles = ["Business Admin", "Admin"]
+    if x_user_role not in allowed_roles:
+        raise HTTPException(status_code=403, detail="Forbidden: Requires Business Admin or Admin role")
+    return x_user_role

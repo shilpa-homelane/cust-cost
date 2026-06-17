@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
   import { QuotePanel } from './QuotePanel';
   import { Modal } from '../ui/Modal';
   import { useToast } from '../ui/Toast';
-  import type { Role } from '../../App';
+  import type { Role, VisibilitySettings } from '../../App';
 
   interface QuoteResponse {
     quote: {
@@ -48,9 +48,10 @@ import { useState, useEffect } from 'react';
     role: Role;
     presentationMode: boolean;
     loadedQuote: any;
+    visibilitySettings: VisibilitySettings;
   }
 
-  export function DesignerView({ role, presentationMode, loadedQuote }: DesignerViewProps) {
+  export function DesignerView({ role, presentationMode, loadedQuote, visibilitySettings }: DesignerViewProps) {
     const { showToast } = useToast();
     const [file, setFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -219,6 +220,7 @@ import { useState, useEffect } from 'react';
                 quoteResult={quoteResult}
                 extraction={extraction}
                 presentationMode={presentationMode}
+                visibilitySettings={visibilitySettings}
               />
             </div>
 

@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { LayoutDashboard, FileText, BookOpen, Settings, Eye, EyeOff, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, FileText, BookOpen, Settings, Eye, EyeOff, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { ToastProvider } from '../ui/Toast';
 import type { Role } from '../../App';
 
-type View = 'designer' | 'admin' | 'quotes' | 'features';
+type View = 'designer' | 'admin' | 'quotes' | 'features' | 'business-settings';
 
 interface NavItem {
   id: View;
@@ -34,6 +34,12 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Feature Library',
     icon: <BookOpen className="w-4 h-4" />,
     roles: ['D2M Analyst', 'Senior Designer', 'Admin'],
+  },
+  {
+    id: 'business-settings',
+    label: 'Visibility Settings',
+    icon: <SlidersHorizontal className="w-4 h-4" />,
+    roles: ['Business Admin', 'Admin'],
   },
 ];
 
@@ -104,6 +110,7 @@ export function AppShell({
               <option value="Senior Designer">Senior Designer</option>
               <option value="D2M Analyst">D2M Analyst</option>
               <option value="Procurement Analyst">Procurement Analyst</option>
+              <option value="Business Admin">Business Admin</option>
               <option value="Admin">Admin</option>
             </select>
           </div>

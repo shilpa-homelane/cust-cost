@@ -1,5 +1,6 @@
-import { DollarSign } from 'lucide-react';
+import { DollarSign, AlertCircle } from 'lucide-react';
 import { Skeleton } from '../ui/Skeleton';
+import type { VisibilitySettings } from '../../App';
 
 interface QuoteResponse {
   quote: {
@@ -42,6 +43,7 @@ interface QuotePanelProps {
   quoteResult: QuoteResponse | null;
   extraction: any;
   presentationMode: boolean;
+  visibilitySettings: VisibilitySettings;
 }
 
 export function QuotePanel({
@@ -49,6 +51,7 @@ export function QuotePanel({
   quoteResult,
   extraction,
   presentationMode,
+  visibilitySettings,
 }: QuotePanelProps) {
   if (isQuoting) {
     return (
@@ -90,8 +93,35 @@ export function QuotePanel({
         </p>
       </div>
 
+      {/* Customer-facing itemized BOM (shown in presentation mode when policy allows) */}
+      {presentationMode && visibilitySettings.show_bom_to_customer && cost_sheet && cost_sheet.costed_items?.length > 0 && (
+        <div className="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+          <div className="px-4 py-3 border-b border-slate-100">
+            <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">Materials Summary</span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs text-left">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th className="px-4 py-2.5 font-semibold text-slate-500">Item</th>
+                  <th className="px-4 py-2.5 font-semibold text-slate-500 text-right">Qty</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {cost_sheet.costed_items.map((item: any, idx: number) => (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="px-4 py-2.5 text-slate-800">{item.item_name}</td>
+                    <td className="px-4 py-2.5 text-slate-500 text-right">{fmtQty(item.quantity, item.unit)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       {/* Internal Cost Breakdown */}
-      {!presentationMode && cost_sheet && (
+      {!presentationMode && visibilitySettings.designer_margin_access && cost_sheet && (
         <div className="border border-slate-200 rounded-2xl overflow-hidden bg-white">
           <div className="px-4 py-3 border-b border-slate-100">
             <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">Internal Cost Breakdown</span>
@@ -160,6 +190,14 @@ export function QuotePanel({
               </tfoot>
             </table>
           </div>
+        </div>
+      )}
+
+      {/* Disclaimer — always visible at the bottom */}
+      {visibilitySettings.disclaimer_text && (
+        <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3">
+          <AlertCircle className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-700 leading-relaxed">{visibilitySettings.disclaimer_text}</p>
         </div>
       )}
     </div>
