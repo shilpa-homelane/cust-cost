@@ -274,21 +274,13 @@ def health_check():
 
 
 # Serve the built frontend (production).
-from fastapi.responses import FileResponse
+# Use StaticFiles mount (not a Route) so it never competes with API routes —
+# Starlette checks all Route objects before falling through to Mounts, which
+# prevents the wildcard path from returning 405 for POST API endpoints.
+from fastapi.staticfiles import StaticFiles
 
 _FRONTEND_DIST = os.path.realpath(
     os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")
 )
 if os.path.isdir(_FRONTEND_DIST):
-    _INDEX_HTML = os.path.join(_FRONTEND_DIST, "index.html")
-
-    @app.get("/{full_path:path}")
-    def serve_spa(full_path: str):
-        candidate = os.path.realpath(os.path.join(_FRONTEND_DIST, full_path))
-        if (
-            full_path
-            and (candidate == _FRONTEND_DIST or candidate.startswith(_FRONTEND_DIST + os.sep))
-            and os.path.isfile(candidate)
-        ):
-            return FileResponse(candidate)
-        return FileResponse(_INDEX_HTML)
+    app.mount("/", StaticFiles(directory=_FRONTEND_DIST, html=True), name="spa")
