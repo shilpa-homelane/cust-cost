@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "zL58lnp0enqrwMVpqwVHV"
+uri = "file://.local/tasks/user-journey-requirements.md"
+type = "text"
+title = "User Journey & Requirements — Custom Costing Tool"
