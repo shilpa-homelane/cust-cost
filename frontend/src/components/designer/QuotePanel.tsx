@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DollarSign, Printer, Save, ChevronDown, ChevronUp } from 'lucide-react';
+import { DollarSign, Printer, Save } from 'lucide-react';
 import { Modal } from '../ui/Modal';
 import { useToast } from '../ui/Toast';
 import { Skeleton } from '../ui/Skeleton';
@@ -59,7 +59,6 @@ export function QuotePanel({
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [customerName, setCustomerName] = useState('');
   const [isSaving, setIsSaving] = useState(false);
-  const [breakdownOpen, setBreakdownOpen] = useState(false);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,7 +104,7 @@ export function QuotePanel({
 
   return (
     <>
-      <div className="space-y-4 border-t border-slate-100 pt-5 mt-2">
+      <div className="space-y-4">
         {/* Price Hero */}
         <div className="bg-indigo-600 rounded-2xl p-5 text-white">
           <div className="flex items-center gap-2 mb-1">
@@ -136,83 +135,76 @@ export function QuotePanel({
           </button>
         </div>
 
-        {/* Internal Cost Breakdown */}
+        {/* Internal Cost Breakdown — always visible, scrolls within the Quote panel */}
         {!presentationMode && cost_sheet && (
           <div className="border border-slate-200 rounded-2xl overflow-hidden bg-white">
-            <button
-              className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50 transition-colors"
-              onClick={() => setBreakdownOpen(o => !o)}
-            >
+            <div className="px-4 py-3 border-b border-slate-100">
               <span className="text-xs font-semibold text-slate-700 uppercase tracking-widest">Internal Cost Breakdown</span>
-              {breakdownOpen ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
-            </button>
-
-            {breakdownOpen && (
-              <div className="border-t border-slate-200 overflow-x-auto">
-                <table className="w-full text-xs text-left">
-                  <thead className="bg-slate-50 border-b border-slate-200">
-                    <tr>
-                      <th className="px-4 py-2.5 font-semibold text-slate-500">Item</th>
-                      <th className="px-4 py-2.5 font-semibold text-slate-500">Qty</th>
-                      <th className="px-4 py-2.5 font-semibold text-slate-500 text-right">Unit Price</th>
-                      <th className="px-4 py-2.5 font-semibold text-slate-500 text-right">Total</th>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left">
+                <thead className="bg-slate-50 border-b border-slate-200">
+                  <tr>
+                    <th className="px-4 py-2.5 font-semibold text-slate-500">Item</th>
+                    <th className="px-4 py-2.5 font-semibold text-slate-500">Qty</th>
+                    <th className="px-4 py-2.5 font-semibold text-slate-500 text-right">Unit Price</th>
+                    <th className="px-4 py-2.5 font-semibold text-slate-500 text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {cost_sheet.costed_items.map((item: any, idx: number) => (
+                    <tr key={idx} className="hover:bg-slate-50">
+                      <td className="px-4 py-2.5 text-slate-800">{item.item_name}</td>
+                      <td className="px-4 py-2.5 text-slate-500">{fmtQty(item.quantity, item.unit)}</td>
+                      <td className="px-4 py-2.5 text-slate-500 text-right">{fmt(item.rate)}</td>
+                      <td className="px-4 py-2.5 text-slate-800 font-medium text-right">{fmt(item.line_subtotal)}</td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {cost_sheet.costed_items.map((item: any, idx: number) => (
-                      <tr key={idx} className="hover:bg-slate-50">
-                        <td className="px-4 py-2.5 text-slate-800">{item.item_name}</td>
-                        <td className="px-4 py-2.5 text-slate-500">{fmtQty(item.quantity, item.unit)}</td>
-                        <td className="px-4 py-2.5 text-slate-500 text-right">{fmt(item.rate)}</td>
-                        <td className="px-4 py-2.5 text-slate-800 font-medium text-right">{fmt(item.line_subtotal)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                  <tfoot className="bg-slate-50 border-t border-slate-200 text-xs font-medium">
-                    <tr className="border-b border-slate-100">
-                      <td colSpan={3} className="px-4 py-2 text-right text-slate-500">COGS Base</td>
-                      <td className="px-4 py-2 text-right text-slate-800">{fmt(cost_sheet.cogs_base)}</td>
+                  ))}
+                </tbody>
+                <tfoot className="bg-slate-50 border-t border-slate-200 text-xs font-medium">
+                  <tr className="border-b border-slate-100">
+                    <td colSpan={3} className="px-4 py-2 text-right text-slate-500">COGS Base</td>
+                    <td className="px-4 py-2 text-right text-slate-800">{fmt(cost_sheet.cogs_base)}</td>
+                  </tr>
+                  <tr className="border-b border-slate-100">
+                    <td colSpan={3} className="px-4 py-2 text-right text-slate-500">Misc Overhead (2.5%)</td>
+                    <td className="px-4 py-2 text-right text-slate-800">{fmt(cost_sheet.miscellaneous_overhead)}</td>
+                  </tr>
+                  <tr className="border-b border-slate-100">
+                    <td colSpan={3} className="px-4 py-2 text-right text-slate-500">Transportation (3%)</td>
+                    <td className="px-4 py-2 text-right text-slate-800">{fmt(cost_sheet.transportation_cost)}</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 text-green-700">
+                    <td colSpan={3} className="px-4 py-2 text-right">Vendor Margin (15%)</td>
+                    <td className="px-4 py-2 text-right">+{fmt(cost_sheet.vendor_margin)}</td>
+                  </tr>
+                  <tr className="border-b border-slate-100 text-green-700">
+                    <td colSpan={3} className="px-4 py-2 text-right">
+                      Brand Margin ({quote.brand === 'HomeLane' ? '40%' : 'Custom'})
+                    </td>
+                    <td className="px-4 py-2 text-right">+{fmt(cost_sheet.brand_margin)}</td>
+                  </tr>
+                  {cost_sheet.confidence_buffer > 0 && (
+                    <tr className="border-b border-slate-100 text-amber-700 bg-amber-50 font-semibold">
+                      <td colSpan={3} className="px-4 py-2 text-right">Confidence Buffer (10%)</td>
+                      <td className="px-4 py-2 text-right">+{fmt(cost_sheet.confidence_buffer)}</td>
                     </tr>
-                    <tr className="border-b border-slate-100">
-                      <td colSpan={3} className="px-4 py-2 text-right text-slate-500">Misc Overhead (2.5%)</td>
-                      <td className="px-4 py-2 text-right text-slate-800">{fmt(cost_sheet.miscellaneous_overhead)}</td>
-                    </tr>
-                    <tr className="border-b border-slate-100">
-                      <td colSpan={3} className="px-4 py-2 text-right text-slate-500">Transportation (3%)</td>
-                      <td className="px-4 py-2 text-right text-slate-800">{fmt(cost_sheet.transportation_cost)}</td>
-                    </tr>
-                    <tr className="border-b border-slate-100 text-green-700">
-                      <td colSpan={3} className="px-4 py-2 text-right">Vendor Margin (15%)</td>
-                      <td className="px-4 py-2 text-right">+{fmt(cost_sheet.vendor_margin)}</td>
-                    </tr>
-                    <tr className="border-b border-slate-100 text-green-700">
-                      <td colSpan={3} className="px-4 py-2 text-right">
-                        Brand Margin ({quote.brand === 'HomeLane' ? '40%' : 'Custom'})
-                      </td>
-                      <td className="px-4 py-2 text-right">+{fmt(cost_sheet.brand_margin)}</td>
-                    </tr>
-                    {cost_sheet.confidence_buffer > 0 && (
-                      <tr className="border-b border-slate-100 text-amber-700 bg-amber-50 font-semibold">
-                        <td colSpan={3} className="px-4 py-2 text-right">Confidence Buffer (10%)</td>
-                        <td className="px-4 py-2 text-right">+{fmt(cost_sheet.confidence_buffer)}</td>
-                      </tr>
-                    )}
-                    <tr className="border-b border-slate-200 bg-slate-100 font-semibold text-slate-900">
-                      <td colSpan={3} className="px-4 py-2 text-right">Total Cost (Excl. GST)</td>
-                      <td className="px-4 py-2 text-right">{fmt(cost_sheet.total_cost_excl_gst)}</td>
-                    </tr>
-                    <tr className="border-b border-slate-200 text-slate-600">
-                      <td colSpan={3} className="px-4 py-2 text-right">GST (18%)</td>
-                      <td className="px-4 py-2 text-right">{fmt(cost_sheet.gst_amount)}</td>
-                    </tr>
-                    <tr className="bg-indigo-50 text-indigo-900 font-bold border-t-2 border-indigo-400">
-                      <td colSpan={3} className="px-4 py-2 text-right">Final Customer Quote (Incl. GST)</td>
-                      <td className="px-4 py-2 text-right">{fmt(quote.total_price_incl_gst)}</td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            )}
+                  )}
+                  <tr className="border-b border-slate-200 bg-slate-100 font-semibold text-slate-900">
+                    <td colSpan={3} className="px-4 py-2 text-right">Total Cost (Excl. GST)</td>
+                    <td className="px-4 py-2 text-right">{fmt(cost_sheet.total_cost_excl_gst)}</td>
+                  </tr>
+                  <tr className="border-b border-slate-200 text-slate-600">
+                    <td colSpan={3} className="px-4 py-2 text-right">GST (18%)</td>
+                    <td className="px-4 py-2 text-right">{fmt(cost_sheet.gst_amount)}</td>
+                  </tr>
+                  <tr className="bg-indigo-50 text-indigo-900 font-bold border-t-2 border-indigo-400">
+                    <td colSpan={3} className="px-4 py-2 text-right">Final Customer Quote (Incl. GST)</td>
+                    <td className="px-4 py-2 text-right">{fmt(quote.total_price_incl_gst)}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
         )}
       </div>

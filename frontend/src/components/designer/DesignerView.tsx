@@ -191,24 +191,36 @@ export function DesignerView({ role, presentationMode, loadedQuote }: DesignerVi
 
         {/* Right Pane */}
         <div className="w-1/2 bg-white flex flex-col overflow-hidden">
-          <div className="flex-shrink-0 px-6 py-4 border-b border-slate-200 bg-white">
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Extracted Specifications & Quote</h2>
+          {/* Specs Section — top 60% */}
+          <div className="flex-[3] min-h-0 flex flex-col overflow-hidden border-b border-slate-200">
+            <div className="flex-shrink-0 px-6 py-3 border-b border-slate-100 bg-white">
+              <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Extracted Specifications</h2>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              <ExtractionPanel
+                isExtracting={isExtracting}
+                extraction={extraction}
+                allFeatures={allFeatures}
+                onExtractionChange={handleExtractionChange}
+                onTogglePremiumFeature={togglePremiumFeature}
+              />
+            </div>
           </div>
-          <div className="flex-1 overflow-y-auto p-6">
-            <ExtractionPanel
-              isExtracting={isExtracting}
-              extraction={extraction}
-              allFeatures={allFeatures}
-              onExtractionChange={handleExtractionChange}
-              onTogglePremiumFeature={togglePremiumFeature}
-            />
-            <QuotePanel
-              isQuoting={isQuoting}
-              quoteResult={quoteResult}
-              extraction={extraction}
-              presentationMode={presentationMode}
-              onSaveDraft={handleSaveDraft}
-            />
+
+          {/* Quote Section — bottom 40% */}
+          <div className="flex-[2] min-h-0 flex flex-col overflow-hidden bg-slate-50">
+            <div className="flex-shrink-0 px-6 py-3 border-b border-slate-200 bg-white">
+              <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Quote</h2>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              <QuotePanel
+                isQuoting={isQuoting}
+                quoteResult={quoteResult}
+                extraction={extraction}
+                presentationMode={presentationMode}
+                onSaveDraft={handleSaveDraft}
+              />
+            </div>
           </div>
         </div>
       </div>
