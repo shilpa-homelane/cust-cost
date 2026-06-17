@@ -31,7 +31,7 @@ export function D2MFeatureLibrary({ role }: { role: string }) {
   const fetchFeatures = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/v1/features");
+      const res = await fetch("/api/v1/features");
       const data = await res.json();
       if (res.ok) {
         setFeatures(data);
@@ -72,7 +72,7 @@ export function D2MFeatureLibrary({ role }: { role: string }) {
         calibration_notes: calibrationNotes
       };
 
-      const res = await fetch(`http://localhost:8000/api/v1/features/${editingFeature.feature_type}`, {
+      const res = await fetch(`/api/v1/features/${editingFeature.feature_type}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

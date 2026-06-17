@@ -60,7 +60,7 @@ function App() {
   useEffect(() => {
     const fetchAllFeatures = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/v1/features");
+        const res = await fetch("/api/v1/features");
         const data = await res.json();
         if (res.ok) {
           setAllFeatures(data);
@@ -138,7 +138,7 @@ function App() {
 
     try {
       // Assuming FastAPI is running on localhost:8000
-      const res = await fetch("http://localhost:8000/api/v1/extraction/extract-document", {
+      const res = await fetch("/api/v1/extraction/extract-document", {
         method: "POST",
         headers: { "X-User-Role": role },
         body: formData,
@@ -161,7 +161,7 @@ function App() {
     setIsQuoting(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/costing/generate-quote", {
+      const res = await fetch("/api/v1/costing/generate-quote", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -196,7 +196,7 @@ function App() {
         costing_data: quoteResult
       };
       
-      const res = await fetch("http://localhost:8000/api/v1/quotes", {
+      const res = await fetch("/api/v1/quotes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

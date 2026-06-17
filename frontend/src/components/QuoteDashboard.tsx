@@ -8,7 +8,7 @@ export function QuoteDashboard({ role, onLoadQuote }: { role: string, onLoadQuot
   const fetchQuotes = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/v1/quotes", {
+      const res = await fetch("/api/v1/quotes", {
         headers: { "X-User-Role": role }
       });
       const data = await res.json();

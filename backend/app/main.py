@@ -89,3 +89,23 @@ def generate_quote_endpoint(extraction: UnitExtraction, db: Session = Depends(ge
 @app.get("/api/v1/health")
 def health_check():
     return {"status": "ok"}
+
+# Serve the built frontend (production). In dev the Vite server handles this.
+from fastapi.responses import FileResponse
+
+_FRONTEND_DIST = os.path.realpath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")
+)
+if os.path.isdir(_FRONTEND_DIST):
+    _INDEX_HTML = os.path.join(_FRONTEND_DIST, "index.html")
+
+    @app.get("/{full_path:path}")
+    def serve_spa(full_path: str):
+        candidate = os.path.realpath(os.path.join(_FRONTEND_DIST, full_path))
+        if (
+            full_path
+            and (candidate == _FRONTEND_DIST or candidate.startswith(_FRONTEND_DIST + os.sep))
+            and os.path.isfile(candidate)
+        ):
+            return FileResponse(candidate)
+        return FileResponse(_INDEX_HTML)

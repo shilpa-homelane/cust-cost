@@ -21,7 +21,7 @@ export function AdminDashboard({ role }: { role: string }) {
   const fetchRates = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/v1/admin/rates", {
+      const res = await fetch("/api/v1/admin/rates", {
         headers: { "X-User-Role": role }
       });
       const data = await res.json();
@@ -73,7 +73,7 @@ export function AdminDashboard({ role }: { role: string }) {
     try {
       if (editingRate) {
         // PUT request
-        const res = await fetch(`http://localhost:8000/api/v1/admin/rates/${editingRate.item_id}`, {
+        const res = await fetch(`/api/v1/admin/rates/${editingRate.item_id}`, {
           method: "PUT",
           headers: { 
             "Content-Type": "application/json",
@@ -90,7 +90,7 @@ export function AdminDashboard({ role }: { role: string }) {
         if (!res.ok) throw new Error("Failed to update rate");
       } else {
         // POST request
-        const res = await fetch(`http://localhost:8000/api/v1/admin/rates`, {
+        const res = await fetch(`/api/v1/admin/rates`, {
           method: "POST",
           headers: { 
             "Content-Type": "application/json",
