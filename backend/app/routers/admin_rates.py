@@ -1,4 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+import csv
+import io
+
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date
@@ -43,6 +46,98 @@ def create_rate(rate_in: RateCreate, db: Session = Depends(get_db), role: str = 
     db.commit()
     db.refresh(db_rate)
     return db_rate
+
+REQUIRED_CSV_COLUMNS = {"item_id", "name", "category", "unit", "price_per_unit", "gst_percent"}
+
+@router.post("/rates/import")
+async def import_rates_csv(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    role: str = Depends(require_procurement_access),
+):
+    if not file.filename or not file.filename.lower().endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
+
+    raw = await file.read()
+    try:
+        text = raw.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        raise HTTPException(status_code=400, detail="File must be UTF-8 encoded.")
+
+    reader = csv.DictReader(io.StringIO(text))
+    if reader.fieldnames is None:
+        raise HTTPException(status_code=400, detail="CSV file is empty.")
+
+    headers = {h.strip().lower() for h in reader.fieldnames}
+    missing = REQUIRED_CSV_COLUMNS - headers
+    if missing:
+        raise HTTPException(
+            status_code=400,
+            detail=f"CSV is missing required columns: {', '.join(sorted(missing))}",
+        )
+
+    existing_ids = {
+        r.item_id
+        for r in db.query(MasterRate.item_id).filter(MasterRate.valid_to == None).all()
+    }
+
+    rows_added = 0
+    rows_skipped = 0
+    errors: list[dict] = []
+
+    for line_num, row in enumerate(reader, start=2):
+        row = {k.strip().lower(): v.strip() for k, v in row.items() if k}
+        item_id = row.get("item_id", "").strip()
+
+        if not item_id:
+            errors.append({"row": line_num, "reason": "item_id is empty"})
+            continue
+
+        if item_id in existing_ids:
+            rows_skipped += 1
+            continue
+
+        try:
+            price_per_unit = float(row["price_per_unit"])
+            gst_percent = float(row["gst_percent"])
+        except ValueError:
+            errors.append({"row": line_num, "item_id": item_id, "reason": "price_per_unit and gst_percent must be numeric"})
+            continue
+
+        name = row.get("name", "").strip()
+        category = row.get("category", "").strip()
+        unit = row.get("unit", "").strip()
+
+        if not name or not category or not unit:
+            errors.append({"row": line_num, "item_id": item_id, "reason": "name, category, and unit must not be empty"})
+            continue
+
+        master_sku = row.get("master_sku", "").strip() or item_id
+
+        db.add(MasterRate(
+            item_id=item_id,
+            category=category,
+            name=name,
+            master_sku=master_sku,
+            unit=unit,
+            rate=price_per_unit,
+            gst_percent=gst_percent,
+            applicable_vendor=row.get("applicable_vendor", "").strip() or None,
+            valid_from=date.today(),
+            valid_to=None,
+            in_catalogue=True,
+        ))
+        existing_ids.add(item_id)
+        rows_added += 1
+
+    db.commit()
+
+    return {
+        "rows_added": rows_added,
+        "rows_skipped": rows_skipped,
+        "errors": errors,
+    }
+
 
 @router.put("/rates/{item_id}", response_model=RateResponse)
 def update_rate(item_id: str, rate_in: RateUpdate, db: Session = Depends(get_db), role: str = Depends(require_procurement_access)):
