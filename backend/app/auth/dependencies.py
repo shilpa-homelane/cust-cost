@@ -9,20 +9,20 @@ def get_current_role(x_user_role: str = Header(default="Designer")):
 
 def require_procurement_access(x_user_role: str = Header(default="Designer")):
     """
-    Raises a 403 Forbidden if the user is not a Procurement Analyst or Admin.
+    Raises a 403 Forbidden if the user is not a Tech Admin or legacy Procurement/Admin role.
     """
-    allowed_roles = ["Procurement Analyst", "Admin"]
+    allowed_roles = ["Procurement Analyst", "Admin", "Tech Admin"]
     if x_user_role not in allowed_roles:
-        raise HTTPException(status_code=403, detail="Forbidden: Requires Procurement or Admin role")
+        raise HTTPException(status_code=403, detail="Forbidden: Requires Tech Admin role")
     return x_user_role
 
 def require_d2m_analyst_access(x_user_role: str = Header(default="Designer")):
     """
-    Raises a 403 Forbidden if the user is not a D2M Analyst or Admin.
+    Raises a 403 Forbidden if the user is not a Tech Admin or legacy D2M/Admin role.
     """
-    allowed_roles = ["D2M Analyst", "Admin"]
+    allowed_roles = ["D2M Analyst", "Admin", "Tech Admin"]
     if x_user_role not in allowed_roles:
-        raise HTTPException(status_code=403, detail="Forbidden: Requires D2M Analyst or Admin role")
+        raise HTTPException(status_code=403, detail="Forbidden: Requires Tech Admin role")
     return x_user_role
 
 

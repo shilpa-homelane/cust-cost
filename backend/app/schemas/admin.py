@@ -15,6 +15,8 @@ class RateCreate(BaseModel):
 
 class RateUpdate(BaseModel):
     name: str
+    category: Optional[str] = None
+    unit: Optional[str] = None
     rate: float
     gst_percent: float = 18.0
     applicable_vendor: Optional[str] = None

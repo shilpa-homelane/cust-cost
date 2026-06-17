@@ -20,6 +20,10 @@ def get_db():
 def list_rates(active_only: bool = True, db: Session = Depends(get_db)):
     query = db.query(MasterRate)
     if active_only:
+        # Active = not expired AND in catalogue for designer selection
+        query = query.filter(MasterRate.valid_to == None, MasterRate.in_catalogue == True)
+    else:
+        # When showing all, only exclude expired rows (show both active and deactivated)
         query = query.filter(MasterRate.valid_to == None)
     return query.all()
 
@@ -51,13 +55,13 @@ def update_rate(item_id: str, rate_in: RateUpdate, db: Session = Depends(get_db)
     # Expire old rate
     current_rate.valid_to = date.today()
     
-    # Create new rate with updated fields
+    # Create new rate with updated fields (unit and category may be updated)
     new_rate = MasterRate(
         item_id=current_rate.item_id,
-        category=current_rate.category,
+        category=rate_in.category if rate_in.category is not None else current_rate.category,
         name=rate_in.name,
         master_sku=current_rate.master_sku,
-        unit=current_rate.unit,
+        unit=rate_in.unit if rate_in.unit is not None else current_rate.unit,
         rate=rate_in.rate,
         gst_percent=rate_in.gst_percent,
         applicable_vendor=rate_in.applicable_vendor,
