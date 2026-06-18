@@ -1,0 +1,1 @@
+- [User pre-flight requirement](git-pull-first.md) — Always pull before starting work
