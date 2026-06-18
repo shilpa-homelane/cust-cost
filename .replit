@@ -55,12 +55,12 @@ outputType = "webview"
 name = "GitHub Auto-Sync"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "bash scripts/install-git-hooks.sh && echo '[auto-sync] Hook active. Scheduled push every 30 min.' && while true; do sleep 1800; bash scripts/auto-push-github.sh || true; done"
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash scripts/install-git-hooks.sh && echo '[auto-sync] Hook active. Pushing now, then every 30 min.' && bash scripts/auto-push-github.sh || true; while true; do sleep 1800; bash scripts/auto-push-github.sh || true; done"
 
 [[ports]]
 localPort = 5000

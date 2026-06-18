@@ -19,6 +19,9 @@ git add -A
 if git diff --cached --quiet; then
   echo "[auto-push] Nothing to commit. Checking for unpushed commits..."
 else
+  # Ensure a git identity is set (required for commit in this environment)
+  git config user.email 2>/dev/null | grep -q '@' || git config user.email "auto-sync@replit.local"
+  git config user.name 2>/dev/null | grep -q '.' || git config user.name "Replit Auto-Sync"
   MSG="${AUTO_PUSH_MSG:-Auto-sync $(date '+%Y-%m-%d %H:%M')}"
   git commit -m "$MSG"
 fi
@@ -28,7 +31,8 @@ REMOTE_REF=$(git rev-parse "@{u}" 2>/dev/null || echo "")
 
 if [ -z "$REMOTE_REF" ] || [ "$LOCAL" != "$REMOTE_REF" ]; then
   echo "[auto-push] Pushing to $REMOTE $BRANCH..."
-  git push "$REMOTE" "$BRANCH"
+  # Force-push: Replit workspace is always the canonical source.
+  git push --force "$REMOTE" "$BRANCH"
   echo "[auto-push] Done."
 else
   echo "[auto-push] Already up to date. Nothing to push."
