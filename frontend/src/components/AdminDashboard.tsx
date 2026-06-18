@@ -86,7 +86,8 @@ export function AdminDashboard({ role }: { role: string }) {
       }
       setImportResult(data as ImportResult);
       if (data.rows_added > 0) fetchItems();
-    } catch {
+    } catch (err) {
+      console.error('CSV import failed:', err);
       showToast('Could not upload CSV.', 'error');
     } finally {
       setImporting(false);

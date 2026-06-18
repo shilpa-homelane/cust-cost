@@ -2,12 +2,20 @@ import csv
 import io
 
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from pydantic import ValidationError
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date
 
 from app.models.rate_db import SessionLocal, MasterRate
-from app.schemas.admin import RateCreate, RateUpdate, RateResponse
+from app.schemas.admin import (
+    RateCreate,
+    RateUpdate,
+    RateResponse,
+    CsvRateRow,
+    ImportRowError,
+    ImportResult,
+)
 from app.auth.dependencies import require_procurement_access
 
 router = APIRouter()
@@ -49,25 +57,21 @@ def create_rate(rate_in: RateCreate, db: Session = Depends(get_db), role: str = 
 
 REQUIRED_CSV_COLUMNS = {"item_id", "name", "category", "unit", "price_per_unit", "gst_percent"}
 
-@router.post("/rates/import")
-async def import_rates_csv(
-    file: UploadFile = File(...),
-    db: Session = Depends(get_db),
-    role: str = Depends(require_procurement_access),
-):
-    if not file.filename or not file.filename.lower().endswith(".csv"):
-        raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
+# Row 1 of the file is the header; data rows are numbered from 2 for user-facing errors.
+_FIRST_DATA_LINE = 2
 
-    raw = await file.read()
+
+def _decode_csv(raw: bytes) -> str:
     try:
-        text = raw.decode("utf-8-sig")
+        return raw.decode("utf-8-sig")
     except UnicodeDecodeError:
         raise HTTPException(status_code=400, detail="File must be UTF-8 encoded.")
 
+
+def _open_reader(text: str) -> csv.DictReader:
     reader = csv.DictReader(io.StringIO(text))
     if reader.fieldnames is None:
         raise HTTPException(status_code=400, detail="CSV file is empty.")
-
     headers = {h.strip().lower() for h in reader.fieldnames}
     missing = REQUIRED_CSV_COLUMNS - headers
     if missing:
@@ -75,6 +79,56 @@ async def import_rates_csv(
             status_code=400,
             detail=f"CSV is missing required columns: {', '.join(sorted(missing))}",
         )
+    return reader
+
+
+def _clean_row(raw_row: dict) -> dict:
+    # csv.DictReader pads short rows with None and dumps surplus cells under a
+    # None key. Coerce every value to a stripped string and drop the None key so
+    # a ragged/short row never raises AttributeError on .strip().
+    return {
+        key.strip().lower(): (value or "").strip()
+        for key, value in raw_row.items()
+        if key
+    }
+
+
+def _format_row_error(exc: ValidationError) -> str:
+    parts = []
+    for err in exc.errors():
+        loc = err.get("loc") or ()
+        field = str(loc[0]) if loc else "row"
+        msg = err.get("msg", "is invalid").removeprefix("Value error, ")
+        parts.append(f"{field} {msg}")
+    return "; ".join(parts)
+
+
+def _to_master_rate(row: CsvRateRow) -> MasterRate:
+    return MasterRate(
+        item_id=row.item_id,
+        category=row.category,
+        name=row.name,
+        master_sku=row.master_sku or row.item_id,
+        unit=row.unit,
+        rate=row.price_per_unit,
+        gst_percent=row.gst_percent,
+        applicable_vendor=row.applicable_vendor or None,
+        valid_from=date.today(),
+        valid_to=None,
+        in_catalogue=True,
+    )
+
+
+@router.post("/rates/import", response_model=ImportResult)
+async def import_rates_csv(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    role: str = Depends(require_procurement_access),
+) -> ImportResult:
+    if not file.filename or not file.filename.lower().endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
+
+    reader = _open_reader(_decode_csv(await file.read()))
 
     existing_ids = {
         r.item_id
@@ -83,60 +137,34 @@ async def import_rates_csv(
 
     rows_added = 0
     rows_skipped = 0
-    errors: list[dict] = []
+    errors: List[ImportRowError] = []
 
-    for line_num, row in enumerate(reader, start=2):
-        row = {k.strip().lower(): v.strip() for k, v in row.items() if k}
-        item_id = row.get("item_id", "").strip()
+    for line_num, raw_row in enumerate(reader, start=_FIRST_DATA_LINE):
+        row = _clean_row(raw_row)
+        item_id = row.get("item_id", "")
 
         if not item_id:
-            errors.append({"row": line_num, "reason": "item_id is empty"})
+            errors.append(ImportRowError(row=line_num, reason="item_id is empty"))
             continue
-
         if item_id in existing_ids:
             rows_skipped += 1
             continue
 
         try:
-            price_per_unit = float(row["price_per_unit"])
-            gst_percent = float(row["gst_percent"])
-        except ValueError:
-            errors.append({"row": line_num, "item_id": item_id, "reason": "price_per_unit and gst_percent must be numeric"})
+            valid_row = CsvRateRow(**row)
+        except ValidationError as exc:
+            errors.append(
+                ImportRowError(row=line_num, item_id=item_id, reason=_format_row_error(exc))
+            )
             continue
 
-        name = row.get("name", "").strip()
-        category = row.get("category", "").strip()
-        unit = row.get("unit", "").strip()
-
-        if not name or not category or not unit:
-            errors.append({"row": line_num, "item_id": item_id, "reason": "name, category, and unit must not be empty"})
-            continue
-
-        master_sku = row.get("master_sku", "").strip() or item_id
-
-        db.add(MasterRate(
-            item_id=item_id,
-            category=category,
-            name=name,
-            master_sku=master_sku,
-            unit=unit,
-            rate=price_per_unit,
-            gst_percent=gst_percent,
-            applicable_vendor=row.get("applicable_vendor", "").strip() or None,
-            valid_from=date.today(),
-            valid_to=None,
-            in_catalogue=True,
-        ))
+        db.add(_to_master_rate(valid_row))
         existing_ids.add(item_id)
         rows_added += 1
 
     db.commit()
 
-    return {
-        "rows_added": rows_added,
-        "rows_skipped": rows_skipped,
-        "errors": errors,
-    }
+    return ImportResult(rows_added=rows_added, rows_skipped=rows_skipped, errors=errors)
 
 
 @router.put("/rates/{item_id}", response_model=RateResponse)
