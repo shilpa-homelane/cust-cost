@@ -31,9 +31,17 @@ REMOTE_REF=$(git rev-parse "@{u}" 2>/dev/null || echo "")
 
 if [ -z "$REMOTE_REF" ] || [ "$LOCAL" != "$REMOTE_REF" ]; then
   echo "[auto-push] Pushing to $REMOTE $BRANCH..."
-  # Force-push: Replit workspace is always the canonical source.
-  git push --force "$REMOTE" "$BRANCH"
-  echo "[auto-push] Done."
+  # NEVER force-push. A previous `git push --force` here silently clobbered
+  # committed work on origin/main. Do a normal (fast-forward-only) push; if the
+  # remote has commits this workspace doesn't have, the push is rejected and we
+  # surface it loudly instead of overwriting history.
+  if git push "$REMOTE" "$BRANCH"; then
+    echo "[auto-push] Done."
+  else
+    echo "[auto-push] ERROR: push rejected — $REMOTE/$BRANCH has diverged (commits not in this workspace)." >&2
+    echo "[auto-push] Refusing to force-push. Reconcile with: git pull --rebase $REMOTE $BRANCH" >&2
+    exit 1
+  fi
 else
   echo "[auto-push] Already up to date. Nothing to push."
 fi
